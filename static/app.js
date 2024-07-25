@@ -19,7 +19,6 @@ const populateProducts = async (category, method = 'GET', payload) => {
 
     for (const product of data) {
         const item = document.createElement('product-item');
-        item.dataset.id = product.id;
         for (const key of keys) {
             const span = document.createElement('span');
             span.slot = key;
