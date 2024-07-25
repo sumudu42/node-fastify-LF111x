@@ -14,16 +14,26 @@
     -> GET route with fastify.get('/') will be mounted at /electronics -> path => 'localhost:3000/electronics'
     * A benefit of this is renaming the folder/directory will change the top-level route without any code modifications
 
-# FASTIFY ROUTE MODEL
+## FASTIFY ROUTE MODEL
 
-# module.exports = async function (fastify, opts) {
-#     fastify.get('/', async function(request, reply) {
-#         return {DATA HERE}
-#     });
-# }
+    module.exports = async function (fastify, opts) {
+        fastify.get('/', async function(request, reply) {
+            return {DATA HERE}
+        });
+    }
 
 * It is important to note that the route handler function is also passed request and reply objects. These
     conceptually the same, but functionally different to the req and res objects passed to the Node core http.createServer()
     request listener function in that they have their own APIs.
 
+## Real-time Functionality
+At the core, real-time technology is about the instantaneous sending and receiving of real-time data, effectuating real-time functionality.
+This functionality allows for the publishing and subscribing of data.
+This information is transmitted and presented in milliseconds, mirroring real-time events.
 
+## Async Generator Functions
+* An async function produces a promise
+* A generator function produces an iterable, which is an object which a next() function tht can be called to make the function progress to the next yield keyword in that function and returns the value of whatever is yielded
+* An async generator funciton is a combination of both async functions and generator functions and it's useful for, **Asynchronously producing continuous state changes**
+    * It returns an async iterable; an object with a next function that returns a promise which resolves to the value of whatever is yielded from the async function generator.
+    * Async iterables can be looped over with **for await of** loop.
