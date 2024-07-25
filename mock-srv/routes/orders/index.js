@@ -1,8 +1,5 @@
 'use strict'
 
-module.exports = async function(fastify, opts) {
-    function monitorMessages(socket) {}
-}
 
 module.exports = async function (fastify, opts) {
     fastify.get('/:category', { websocket: true }, async (socket, request) => {
