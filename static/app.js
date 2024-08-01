@@ -6,13 +6,17 @@ const API = 'http://localhost:3000';
 //     {id: 'B1', name: 'Chocolate bar', rrp: 20.00, info: 'Delicious overpriced chocolate.'}
 // ];
 
-const populateProducts = async () => {
+const populateProducts = async (category, method='GET', payload) => {
     /** clear any content in the products div element */
     const products = document.querySelector('#products');
     products.innerHTML = '';
 
     /** fetch data from the mock server */
-    const res = await fetch(API);
+    const send = method === 'GET' ? {} : {
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    }
+    const res = await fetch(`${API}/${category}`, {method, ...send});
     const data = await res.json();
 
     for(const product of data) {
@@ -27,8 +31,27 @@ const populateProducts = async () => {
     }
 }
 
-document.querySelector('#fetch').addEventListener('click', async () => {
-    await populateProducts();
+const category = document.querySelector('#category');
+const add = document.querySelector('#add');
+
+category.addEventListener('input', async ({ target }) => {
+    add.style.display = 'block';
+    await populateProducts(target.value);
+});
+
+add.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const { target } = e;
+    console.log("target: ", target);
+    console.log('target.name.value:', target.name.value);
+    const payload = {
+        name: target.name.value,
+        rrp: target.rrp.value,
+        info: target.info.value
+    }
+
+    await populateProducts(category.value, 'POST', payload);
+    target.reset();
 });
 
 class Item extends HTMLElement {
