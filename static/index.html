@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compabtile" content="IE=edge" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <script type="module" src="app.js"></script>
+    <style>
+        body {
+            background: rgb(217, 237, 255);
+        }
+    </style>
+    <title>Node | Fastify</title>
+</head>
+
+<body>
+    <nav>
+        <button id="fetch">Fetch Products</button>
+    </nav>
+    <hr/>
+
+    <div id="products"></div>
+    <template id="item">
+        <style>
+            details { font-size: 1.4em; }
+            summary { cursor: pointer; }
+            p { text-indent: 1.4rem; }
+        </style>
+        <details>
+            <summary>
+                <strong><slot name="name"></slot> - <slot name="rrp"></slot></strong>
+            </summary>
+            <p><slot name="info"></slot></p>
+        </details>
+    </template>
+</body>
+
+</html>
