@@ -35,8 +35,13 @@ const populateProducts = async (category, method='GET', payload) => {
 
 let socket = null;
 const realtimeOrders = (category) => {
-    if(socket) socket.close();
-    socket = new WebSocket(`${WS_API}/orders/${category}`);
+    if(socket === null) {
+        socket = new WebSocket(`${WS_API}/orders/${category}`);
+    } else {
+        socket.send(JSON.stringify({ cmd: 'update-category', payload: {category: category}}));
+    }
+
+    // update order totals with new incoming order totals
     socket.addEventListener('message', ({ data }) => {
         try {
             const {id, total} = JSON.parse(data);
