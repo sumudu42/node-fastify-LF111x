@@ -1,4 +1,5 @@
 const API = 'http://localhost:3000';
+const WS_API = 'ws://localhost:3000';
 
 // const data = [
 //     {id: 'A1', name: 'Vacuum Cleaner', rrp: 100.00, info: 'The suckiest vacuum in the world.'},
@@ -21,6 +22,7 @@ const populateProducts = async (category, method='GET', payload) => {
 
     for(const product of data) {
         const item = document.createElement('product-item');
+        item.dataset.id = product.id;
         for(const key of ['name', 'rrp', 'info']) {
             const span = document.createElement('span');
             span.slot = key;
@@ -31,12 +33,33 @@ const populateProducts = async (category, method='GET', payload) => {
     }
 }
 
+let socket = null;
+const realtimeOrders = (category) => {
+    if(socket) socket.close();
+    socket = new WebSocket(`${WS_API}/orders/${category}`);
+    socket.addEventListener('message', ({ data }) => {
+        try {
+            const {id, total} = JSON.parse(data);
+            console.log(`id: ${id}, total: ${total}`)
+            const item = document.querySelector(`[data-id="${id}"]`);
+            if(item === null) return;
+            const span = item.querySelector('[slot="orders"]') || document.createElement('span');
+            span.slot = 'orders';
+            span.textContent = total;
+            item.appendChild(span);
+        } catch (err) {
+            console.error(err);
+        }
+    });
+}
+
 const category = document.querySelector('#category');
 const add = document.querySelector('#add');
 
 category.addEventListener('input', async ({ target }) => {
     add.style.display = 'block';
     await populateProducts(target.value);
+    realtimeOrders(target.value);
 });
 
 add.addEventListener('submit', async (e) => {
@@ -51,6 +74,7 @@ add.addEventListener('submit', async (e) => {
     }
 
     await populateProducts(category.value, 'POST', payload);
+    realtimeOrders(category.value);
     target.reset();
 });
 
