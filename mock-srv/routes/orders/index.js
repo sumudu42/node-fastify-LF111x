@@ -3,7 +3,7 @@
 module.exports = async function (fastify, opts) {
 
     function sendCurrentOrders(category, socket) {
-        for (const order of fastify.currentOrders(request.params.category)) {
+        for (const order of fastify.currentOrders(category)) {
             socket.send(order);
         }
     }
@@ -13,7 +13,7 @@ module.exports = async function (fastify, opts) {
         socket.on('message', (data) => {
             try {
                 const { cmd, payload } = JSON.parse(data);
-                if(cmd === 'update-category') {
+                if (cmd === 'update-category') {
                     sendCurrentOrders(payload.category, socket);
                 }
             } catch (err) {
@@ -27,10 +27,10 @@ module.exports = async function (fastify, opts) {
         socket.on('message', (data) => {
             try {
                 const parsedData = JSON.parse(data);
-                if(data.cmd != null && data.cmd === 'update-category') {
+                if (data.cmd != null && data.cmd === 'update-category') {
                     sendCurrentOrders(payload.category, socket);
                 }
-            } catch(err) {
+            } catch (err) {
                 fastify.log.warn(`WebSocket Message {data: %o} Error: %s`, data, err.message)
             }
         });
@@ -45,5 +45,11 @@ module.exports = async function (fastify, opts) {
             if (socket.readyState >= socket.CLOSING) break;
             socket.send(order);
         }
+    });
+
+    fastify.post('/:id', async (request) => {
+        const { id } = request.params;
+        fastify.addOrder(id, request.body.amount);
+        return { ok: true };
     });
 }
