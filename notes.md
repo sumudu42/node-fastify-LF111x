@@ -37,3 +37,18 @@ This information is transmitted and presented in milliseconds, mirroring real-ti
 * An async generator funciton is a combination of both async functions and generator functions and it's useful for, **Asynchronously producing continuous state changes**
     * It returns an async iterable; an object with a next function that returns a promise which resolves to the value of whatever is yielded from the async function generator.
     * Async iterables can be looped over with **for await of** loop.
+
+## Node.js Streams
+Node.js streams represent continuous data and have a quite vast API.
+There are readable streams, writable streams and hybrid streams that are both readable and writeble (duplex, transform and passthrough streams)
+
+## Shebang or HashBang
+This is a unix and unix-like system directive and known as the shebang or hashbang as per the two leading characters of its syntax.
+When a non-binary file has executable permissions and is run from the command line, the hashbang is checked so that the operating system knows what interpreter to execute the text of the file with.
+
+## JavaScript array slice()
+The slice() method of Array instances returns a shallow copy of a portion of an array into a new array object selected from start to end (end exclusive) where start and end represent the index of items in that array.
+
+## npm link command
+This command is like npm install -g <module> where npm sets up the relevant command name to be used from any directory in the terminal.
+However, rather than installing a copy of our package in the system's global node_modules forlder, it instead links from the global node_modules folder to a given packages project folder, hence any modifications to the files will be reflected immediately the next time the commands are executed.
