@@ -2,7 +2,7 @@
 
 * Fastify works by dividing the service up into plugins. 
     -> A plugin is a module that exports a function. 
-    -> The exported function is passed a Fastify instance an doptions.
+    -> The exported function is passed a Fastify instance and options.
     
 * The fastify instance ca be used to register Routes, fastify.get() for GET routes
     -> The fastify.get() accepts a string representing the path and a route handler function
