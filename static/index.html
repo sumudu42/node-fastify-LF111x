@@ -6,6 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <script type="module" src="app.js"></script>
+    <style>
+        body {
+            background: #FAD8D8;
+        }
+
+        #add {
+            margin-top: 1em;
+            width: 20rem;
+            display: none;
+        }
+
+        #add input {
+            margin-bottom: .5em;
+        }
+
+        [name="name"],
+        [name="rrp"] {
+            width: calc(10rem - 2px)
+        }
+
+        [name="info"] {
+            width: 20rem;
+        }
+
+        #add button {
+            font-weight: bold;
+            width: 5em;
+            float: right;
+        }
+    </style>
     <title>Document</title>
 </head>
 
@@ -19,6 +49,12 @@
     </nav>
     <hr>
     <div id="products"></div>
+    <form id="add">
+        <input type="text" name="name" placeholder="name" required>
+        <input type="number" step="0.01" name="rrp" placeholder="rrp" required>
+        <input type="text" name="info" placeholder="info" required>
+        <button type="submit">Add Item</button>
+    </form>
     <template id="item">
         <style>
             details {
@@ -35,9 +71,15 @@
         </style>
         <details>
             <summary>
-                <strong><slot name="name"></slot></strong> - <em><slot name="rrp"></slot></em>
+                <strong>
+                    <slot name="name"></slot>
+                </strong> - <em>
+                    <slot name="rrp"></slot>
+                </em>
             </summary>
-            <p><slot name="info"></slot></p>
+            <p>
+                <slot name="info"></slot>
+            </p>
         </details>
     </template>
 </body>
